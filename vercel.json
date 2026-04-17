@@ -1,0 +1,45 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index" }],
+  "regions": ["sfo1"],
+  "functions": {
+    "*.ts": {
+      "runtime": "@vercel/node@5.0.0"
+    }
+  },
+  "headers": [
+    {
+      "source": "(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET,POST,OPTIONS"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=300, stale-while-revalidate"
+        },
+        {
+          "key": "Author",
+          "value": "ExerciseDB API"
+        },
+        {
+          "key": "Github",
+          "value": "https://github.com/exercisedb/exercisedb-api"
+        }
+      ]
+    }
+  ]
+}
