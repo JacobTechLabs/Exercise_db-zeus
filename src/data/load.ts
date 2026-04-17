@@ -1,42 +1,23 @@
-import { promises as fs } from 'fs'
-import path from 'path'
 import { Equipment, Exercise, Muscle, BodyPart } from './types'
-import { HTTPException } from 'hono/http-exception'
+import exercisesReq from './exercises.json'
+import equipmentsReq from './equipments.json'
+import bodypartsReq from './bodyparts.json'
+import musclesReq from './muscles.json'
 
 export class FileLoader {
-  private static dataPath = path.resolve(process.cwd(), 'src', 'data')
-
-  private static cache = new Map<string, unknown>()
-
-  private static async loadJSON<T>(filePath: string): Promise<T> {
-    if (this.cache.has(filePath)) {
-      return this.cache.get(filePath) as T
-    }
-
-    try {
-      const fileContent = await fs.readFile(filePath, 'utf-8')
-      const data = JSON.parse(fileContent) as T
-      this.cache.set(filePath, data)
-      return data
-    } catch (error) {
-      console.error(`❌ Error loading JSON file [${filePath}]:`, error)
-      throw new HTTPException(500, { message: `database not working` })
-    }
+  public static async loadExercises(): Promise<Exercise[]> {
+    return exercisesReq as unknown as Exercise[]
   }
 
-  public static loadExercises(): Promise<Exercise[]> {
-    return this.loadJSON<Exercise[]>(path.join(process.cwd(), 'src', 'data', 'exercises.json'))
+  public static async loadEquipments(): Promise<Equipment[]> {
+    return equipmentsReq as unknown as Equipment[]
   }
 
-  public static loadEquipments(): Promise<Equipment[]> {
-    return this.loadJSON<Equipment[]>(path.join(process.cwd(), 'src', 'data', 'equipments.json'))
+  public static async loadBodyParts(): Promise<BodyPart[]> {
+    return bodypartsReq as unknown as BodyPart[]
   }
 
-  public static loadBodyParts(): Promise<BodyPart[]> {
-    return this.loadJSON<BodyPart[]>(path.join(process.cwd(), 'src', 'data', 'bodyparts.json'))
-  }
-
-  public static loadMuscles(): Promise<Muscle[]> {
-    return this.loadJSON<Muscle[]>(path.join(process.cwd(), 'src', 'data', 'muscles.json'))
+  public static async loadMuscles(): Promise<Muscle[]> {
+    return musclesReq as unknown as Muscle[]
   }
 }
