@@ -8,7 +8,8 @@
   "regions": ["sfo1"],
   "functions": {
     "*.ts": {
-      "runtime": "@vercel/node@5.0.0"
+      "runtime": "@vercel/node@5.0.0",
+      "includeFiles": "src/data/**/*.json"
     }
   },
   "headers": [
