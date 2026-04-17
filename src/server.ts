@@ -10,5 +10,5 @@ const app = new App([
 
 export default {
   fetch: app.fetch,
-  port: 80
+  port: process.env.PORT || 3000
 }
