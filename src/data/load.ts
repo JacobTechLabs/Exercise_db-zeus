@@ -8,9 +8,7 @@ export class FileLoader {
 
   private static cache = new Map<string, unknown>()
 
-  private static async loadJSON<T>(filename: string): Promise<T> {
-    const filePath = path.resolve(this.dataPath, filename)
-
+  private static async loadJSON<T>(filePath: string): Promise<T> {
     if (this.cache.has(filePath)) {
       return this.cache.get(filePath) as T
     }
@@ -21,24 +19,24 @@ export class FileLoader {
       this.cache.set(filePath, data)
       return data
     } catch (error) {
-      console.error(`❌ Error loading JSON file [${filename}]:`, error)
+      console.error(`❌ Error loading JSON file [${filePath}]:`, error)
       throw new HTTPException(500, { message: `database not working` })
     }
   }
 
   public static loadExercises(): Promise<Exercise[]> {
-    return this.loadJSON<Exercise[]>(`exercises.json`)
+    return this.loadJSON<Exercise[]>(path.join(process.cwd(), 'src', 'data', 'exercises.json'))
   }
 
   public static loadEquipments(): Promise<Equipment[]> {
-    return this.loadJSON<Equipment[]>('equipments.json')
+    return this.loadJSON<Equipment[]>(path.join(process.cwd(), 'src', 'data', 'equipments.json'))
   }
 
   public static loadBodyParts(): Promise<BodyPart[]> {
-    return this.loadJSON<BodyPart[]>('bodyparts.json')
+    return this.loadJSON<BodyPart[]>(path.join(process.cwd(), 'src', 'data', 'bodyparts.json'))
   }
 
   public static loadMuscles(): Promise<Muscle[]> {
-    return this.loadJSON<Muscle[]>('muscles.json')
+    return this.loadJSON<Muscle[]>(path.join(process.cwd(), 'src', 'data', 'muscles.json'))
   }
 }
