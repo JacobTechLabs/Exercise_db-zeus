@@ -31,6 +31,7 @@ export class App {
       this.app.route('/api/v1', route.controller)
     })
     this.app.route('/', Home)
+    this.app.get('/favicon.ico', (c) => c.redirect('https://cdn.exercisedb.dev/exercisedb/favicon.ico', 301))
   }
 
   private initializeGlobalMiddleware() {
