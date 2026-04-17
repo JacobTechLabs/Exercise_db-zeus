@@ -6,7 +6,7 @@
   "author": "ExerciseDB API",
   "license": "AGPL-3.0",
   "type": "module",
-  "main": "index.ts",
+  "main": "api/index.ts",
   "module": "dist/server.js",
   "types": "dist/index.d.ts",
   "exports": {
