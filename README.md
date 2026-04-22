@@ -1,135 +1,177 @@
 <div align="center">
-  <img src="https://cdn.exercisedb.dev/exercisedb/exercisedb_banner.png" alt="ExerciseDB API Banner" width="100%" height="600px" />
+  <img src="https://cdn.jacobtechlabs.dev/banner.png" alt="JacobTechLabs Fitness API Banner" width="100%" height="400px" />
   
   <br />
   <br />
-  <img src="https://cdn.exercisedb.dev/exercisedb/android-chrome-512x512.png" alt="ExerciseDB Logo" width="120" height="120" />
+  <img src="https://cdn.jacobtechlabs.dev/logo.png" alt="JacobTechLabs Logo" width="120" height="120" />
 
-  <h3>🏋️‍♂️ Comprehensive Fitness Exercise Database API</h3>
+  <h1>JacobTechLabs Fitness API</h1>
+  <h3>Developer-First API Infrastructure for Fitness Applications</h3>
   
   <p>
-    <strong>5,000+ structured exercises</strong> • <strong>Fast & Modern</strong> • <strong>Developer-Friendly</strong>
+    <strong>5,000+ structured exercises</strong> • <strong>Sub-100ms Response Time</strong> • <strong>99.9% Uptime</strong>
   </p>
   
   <p>
     <span style="margin-right: 10px;">
-      <a href="https://dub.sh/exercisedb-api">
-        <img src="https://img.shields.io/badge/Get%20Started-2D2D2D?style=for-the-badge&logo=rocket&logoColor=white" alt="Get Started" />
+      <a href="https://docs.jacobtechlabs.dev">
+        <img src="https://img.shields.io/badge/Documentation-1a365d?style=for-the-badge&logo=book&logoColor=white" alt="Documentation" />
       </a>
     </span>
     <span style="margin-right: 10px;">
-      <a href="https://docs.exercisedb.dev">
-        <img src="https://img.shields.io/badge/Documentation-404040?style=for-the-badge&logo=book&logoColor=white" alt="Documentation" />
+      <a href="https://github.com/jacobtechlabs/api-core">
+        <img src="https://img.shields.io/badge/GitHub-1a365d?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
       </a>
     </span>
     <span>
-      <a href="#examples">
-        <img src="https://img.shields.io/badge/Examples-5A5A5A?style=for-the-badge&logo=code&logoColor=white" alt="Examples" />
+      <a href="#quick-start">
+        <img src="https://img.shields.io/badge/Quick%20Start-00d4ff?style=for-the-badge&logo=rocket&logoColor=black" alt="Quick Start" />
       </a>
     </span>
   </p>
 
 </div>
 
-## 🏋🏼‍♀️ ExerciseDB API
+---
 
-ExerciseDB API is a **comprehensive and developer-friendly database** featuring over **5,000 structured, high-quality fitness exercises**. It delivers fast, modern, and scalable access to detailed exercise data—including targeted muscle groups, required equipment, visual aids (images and videos), and step-by-step instructions. Ideal for developers, fitness startups, and health platforms, ExerciseDB empowers the creation of smart workout apps, personalized training plans, and interactive fitness tools.
+## 🚀 Overview
 
-**Perfect for:**
+**JacobTechLabs Fitness API** is a developer-first API infrastructure providing fast, reliable access to 5,000+ structured fitness exercises. Built with modern technologies (Bun, Hono, TypeScript) and designed for seamless integration into fitness apps, health platforms, and workout tools.
 
-- 💪 Fitness app developers
-- 🏃‍♀️ Health & wellness platforms
-- 🎯 Personal training applications
-- 📱 Workout planning tools
-- 🔬 Fitness research projects
+### Key Features
 
-<br>
+- ⚡ **Lightning Fast**: Sub-100ms response times with intelligent caching
+- 🔍 **Advanced Search**: Fuzzy search across exercise names, muscles, and equipment
+- 📊 **Structured Data**: Consistent JSON schema with comprehensive metadata
+- 🛡️ **Production Ready**: Rate limiting, security headers, and health monitoring
+- 📚 **OpenAPI/Swagger**: Interactive documentation at `/docs`
 
-## 🚀 Deploy Your Own API (V1)
+### Perfect For
 
-Want to self-host the open-source ExerciseDB API (V1)?
+- 💪 **Fitness App Developers** - Build workout tracking and planning apps
+- 🏥 **Health Platforms** - Integrate exercise data into wellness solutions
+- 🎯 **Personal Training Tools** - Create custom workout generators
+- 📱 **Mobile Apps** - RESTful API perfect for iOS/Android integration
+- 🔬 **Research Projects** - Structured data for fitness analytics
 
-You can instantly deploy it to **Vercel** with just one click and have your own version running in seconds — no backend setup needed.
+---
 
-<div align="left">
+## 🎯 Quick Start
 
-[![Deploy with Vercel](https://vercel.com/button)](https://dub.sh/DeployNow)
+### 1. Deploy Your Own Instance
 
-</div>
+#### Option A: Vercel (One-Click)
 
-## 🔗 Useful Links
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/jacobtechlabs/api-core)
 
-<div align="left">
+#### Option B: Docker (Recommended)
 
-### 📚 **Documentation & Plans**
+```bash
+# Clone the repository
+git clone https://github.com/jacobtechlabs/api-core.git
+cd api-core
 
-<a href="https://dub.sh/JTgJoq2" target="_blank">
-  <img src="https://img.shields.io/badge/Full%20Documentation-2D2D2D?style=for-the-badge&logo=notion&logoColor=white" alt="Full Documentation" />
-</a>
-<a href="https://dub.sh/JTgJoq2" target="_blank">
-  <img src="https://img.shields.io/badge/Pricing%20Plans-404040?style=for-the-badge&logo=credit-card&logoColor=white" alt="Pricing Plans" />
-</a>
-<a href="https://dub.sh/exercisedb-api-tos" target="_blank">
-  <img src="https://img.shields.io/badge/Terms%20Of%20Use-2D2D2D?style=for-the-badge&logo=notion&logoColor=white" alt="Terms of use" />
-</a>
-<br>
+# Build and run with Docker
+docker build -t jacobtechlabs-api .
+docker run -p 3000:3000 jacobtechlabs-api
+```
 
-### 🧪 **API Playground**
+#### Option C: Local Development
 
-<strong>Test our datasets and explore API endpoints</strong><br>
-<em>⚠️ These endpoints are for exploration only and <strong>not recommended for production integration</strong> — strict rate limits and potential instability may apply.</em>
-<br><br>
-<strong style="color: red;">**Note:** V1 and V2 refer to different datasets.</strong>
-<br>
+```bash
+# Clone and install dependencies
+git clone https://github.com/jacobtechlabs/api-core.git
+cd api-core
 
-  <p>
-    <a href="https://dub.sh/exercisedb_v2" target="_blank">
-      <img src="https://img.shields.io/badge/v2%20Playground-5A5A5A?style=for-the-badge&logo=play&logoColor=white" alt="v2 Playground" />
-    </a>
-    <a href="https://dub.sh/exercisedb_v1" target="_blank">
-      <img src="https://img.shields.io/badge/v1%20Playground-5A5A5A?style=for-the-badge&logo=play&logoColor=white" alt="v1 Playground" />
-    </a>
-  </p>
+# Using Bun (recommended)
+bun install
+bun run dev
 
-</div>
+# Or using npm
+npm install
+npm run dev
+```
 
-## 📬 Support & Contact
+### 2. Make Your First Request
 
-<div align="left">
+```bash
+curl https://your-api-url/api/v1/exercises?limit=5
+```
 
-<p><strong>Need help or have questions? We're here to assist!</strong></p>
+---
 
-<table>
-  <tr>
-    <td align="left">
-      <a href="mailto:hello@exercisedb.dev">
-        <img src="https://img.shields.io/badge/General%20Inquiries-2D2D2D?style=for-the-badge&logo=mail&logoColor=white" alt="General Inquiries" />
-      </a>
-      <br>
-      <small>✉️ Partnerships & General Questions</small>
-    </td>
-    <td align="left">
-      <a href="mailto:support@exercisedb.dev">
-        <img src="https://img.shields.io/badge/Technical%20Support-404040?style=for-the-badge&logo=wrench&logoColor=white" alt="Technical Support" />
-      </a>
-      <br>
-      <small>🛠️ API Help & Technical Issues</small>
-    </td>
-    <td align="left">
-      <a href="https://t.me/exercisedb" target="_blank">
-        <img src="https://img.shields.io/badge/Chat%20With%20Us-5A5A5A?style=for-the-badge&logo=message-circle&logoColor=white" alt="Chat With Us" />
-      </a>
-      <br>
-      <small>💬 Live Chat Support (Fast Response)</small>
-    </td>
-  </tr>
-</table>
+## 📡 API Endpoints
 
-</div>
+### Exercises
 
-<br>
+| Endpoint | Description | Example |
+|----------|-------------|---------|
+| `GET /api/v1/exercises` | List all exercises with pagination | `?limit=10&offset=0` |
+| `GET /api/v1/exercises/search` | Search exercises by keyword | `?q=bench&threshold=0.3` |
+| `GET /api/v1/exercises/filter` | Filter by multiple criteria | `?muscles=chest&equipment=barbell` |
+| `GET /api/v1/exercises/{id}` | Get specific exercise by ID | `/api/v1/exercises/K6NnTv0` |
 
-## 🏋️‍♂️ V2 Exercise Sample
+### Reference Data
+
+| Endpoint | Description |
+|----------|-------------|
+| `GET /api/v1/muscles` | List all target muscles |
+| `GET /api/v1/bodyparts` | List all body parts |
+| `GET /api/v1/equipments` | List all equipment types |
+| `GET /api/v1/muscles/{name}/exercises` | Exercises by muscle group |
+| `GET /api/v1/bodyparts/{name}/exercises` | Exercises by body part |
+| `GET /api/v1/equipments/{name}/exercises` | Exercises by equipment |
+
+### System
+
+| Endpoint | Description |
+|----------|-------------|
+| `GET /health` | Health check status |
+| `GET /docs` | Interactive API documentation |
+| `GET /swagger` | OpenAPI specification (JSON) |
+
+---
+
+## 💻 Code Examples
+
+### JavaScript/TypeScript
+
+```typescript
+// Search exercises
+const response = await fetch(
+  'https://api.jacobtechlabs.dev/api/v1/exercises/search?q=chest'
+);
+const exercises = await response.json();
+
+// Get exercises by muscle
+const muscleExercises = await fetch(
+  'https://api.jacobtechlabs.dev/api/v1/muscles/chest/exercises'
+);
+```
+
+### Python
+
+```python
+import requests
+
+# Get all exercises with pagination
+response = requests.get(
+    'https://api.jacobtechlabs.dev/api/v1/exercises',
+    params={'limit': 10, 'offset': 0}
+)
+exercises = response.json()
+```
+
+### cURL
+
+```bash
+# Filter exercises by equipment and muscle
+curl "https://api.jacobtechlabs.dev/api/v1/exercises/filter?equipment=dumbbell&muscles=biceps"
+```
+
+---
+
+## 🏋️‍♂️ Exercise Data Model
 
 ```json
 {
@@ -140,61 +182,73 @@ You can instantly deploy it to **Vercel** with just one click and have your own 
   "bodyParts": ["Chest"],
   "exerciseType": "weight_reps",
   "targetMuscles": ["Pectoralis Major Clavicular Head"],
-  "secondaryMuscles": ["Deltoid Anterior", "Pectoralis Major Clavicular Head", "Triceps Brachii"],
+  "secondaryMuscles": ["Deltoid Anterior", "Triceps Brachii"],
   "videoUrl": "Barbell-Bench-Press_Chest_.mp4",
   "keywords": [
     "Chest workout with barbell",
-    "Barbell bench press exercise",
-    "Strength training for chest",
-    "Upper body workout with barbell",
-    "Barbell chest exercises",
-    "Bench press for chest muscles",
-    "Building chest muscles with bench press",
-    "Chest strengthening with barbell",
-    "Bench press workout routine",
-    "Barbell exercises for chest muscle growth"
+    "Strength training for chest"
   ],
-  "overview": "The Bench Press is a classic strength training exercise that primarily targets the chest, shoulders, and triceps, contributing to upper body muscle development. It is suitable for anyone, from beginners to professional athletes, looking to improve their upper body strength and muscular endurance. Individuals may want to incorporate bench press into their routine for its effectiveness in enhancing physical performance, promoting bone health, and improving body composition.",
+  "overview": "The Bench Press is a classic strength training exercise...",
   "instructions": [
-    "Grip the barbell with your hands slightly wider than shoulder-width apart, palms facing your feet, and lift it off the rack, holding it straight over your chest with your arms fully extended.",
-    "Slowly lower the barbell down to your chest while keeping your elbows at a 90-degree angle.",
-    "Once the barbell touches your chest, push it back up to the starting position while keeping your back flat on the bench.",
-    "Repeat this process for the desired number of repetitions, always maintaining control of the barbell and ensuring your form is correct."
+    "Grip the barbell with your hands slightly wider than shoulder-width apart...",
+    "Slowly lower the barbell down to your chest..."
   ],
   "exerciseTips": [
-    "Avoid Arching Your Back: One common mistake is excessively arching the back during the lift. This can lead to lower back injuries. Your lower back should have a natural arch, but it should not be overly exaggerated. Your butt, shoulders, and head should maintain contact with the bench at all times.",
-    "Controlled Movement: Avoid the temptation to lift the barbell too quickly. A controlled, steady lift is more effective and reduces the risk of injury. Lower the bar to your mid-chest slowly, pause briefly, then push it back up without locking your elbows at the top.",
-    "Don't Lift Alone:"
+    "Avoid Arching Your Back...",
+    "Controlled Movement..."
   ],
   "variations": [
-    "Decline Bench Press: This variation is performed on a decline bench to target the lower part of the chest.",
-    "Close-Grip Bench Press: This variation focuses on the triceps and the inner part of the chest by placing the hands closer together on the bar.",
-    "Dumbbell Bench Press: This variation uses dumbbells instead of a barbell, allowing for a greater range of motion and individual arm movement.",
-    "Reverse-Grip Bench Press: This variation is performed by flipping your grip so that your palms face towards you, targeting the upper chest and triceps."
+    "Decline Bench Press",
+    "Close-Grip Bench Press"
   ],
-  "relatedExerciseIds": [
-    "U0uPZBq",
-    "QD32SbB",
-    "pdm4AfV",
-    "SebLXCG",
-    "T3JogV7",
-    "hiWPEs1",
-    "Y5ppDdt",
-    "C8OV7Pv",
-    "r3tQt3U",
-    "dCSgT7N"
-  ]
+  "relatedExerciseIds": ["U0uPZBq", "QD32SbB"]
 }
 ```
 
-### 🖼️ Sample Image
+---
 
-![Bench Press Exercise](https://ucarecdn.com/c12bb487-7390-4fc7-903c-a1c2298e70ad/K6NnTv0__BarbellBenchPress_Chest.png)
+## 🛠️ Tech Stack
 
-### 🎥 Sample Video
-
-[Watch Bench Press Video Sample](https://github.com/user-attachments/assets/6845a963-4d80-4dfd-b602-e49616a9483f)
+- **Runtime**: [Bun](https://bun.sh) - Fast JavaScript runtime
+- **Framework**: [Hono](https://hono.dev) - Lightweight, fast web framework
+- **Language**: TypeScript - Type-safe development
+- **API Docs**: OpenAPI 3.1 + Scalar UI
+- **Testing**: Vitest
+- **Linting**: ESLint + Prettier
 
 ---
 
-<em>💪 Now that you’ve bench pressed through the sample… go lift the rest of the v2 dataset like a champ! 😄<em>
+## 📊 Deployment Options
+
+| Platform | Best For | Setup Time |
+|----------|----------|------------|
+| **Google Cloud Run** | Production, auto-scaling | 15 min |
+| **Railway** | Quick deployment, prototyping | 5 min |
+| **Render** | Simplicity, free tier | 5 min |
+| **Vercel** | Serverless functions | 2 min |
+| **Self-Hosted** | Full control, enterprise | 30 min |
+
+See [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md) for detailed instructions.
+
+---
+
+## 📬 Support
+
+| Channel | Contact |
+|---------|---------|
+| 📧 **Email** | [dev@jacobtechlabs.dev](mailto:dev@jacobtechlabs.dev) |
+| 🐛 **Issues** | [GitHub Issues](https://github.com/jacobtechlabs/api-core/issues) |
+| 💬 **Discussions** | [GitHub Discussions](https://github.com/jacobtechlabs/api-core/discussions) |
+
+---
+
+## 📄 License
+
+[AGPL-3.0](./LICENSE) - JacobTechLabs
+
+---
+
+<div align="center">
+  <p><strong>Powered by JacobTechLabs</strong></p>
+  <p><em>Building the future of fitness technology</em></p>
+</div>

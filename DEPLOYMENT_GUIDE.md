@@ -1,267 +1,245 @@
-# 🚀 ExerciseDB API - Complete Deployment Guide for Beginners
+# 🚀 JacobTechLabs Fitness API - Deployment Guide
 
-Hey there! 👋 This guide will walk you through everything you need to know about deploying your ExerciseDB API to the internet. No prior experience needed!
-
----
-
-## 📚 Table of Contents
-
-1. [What is this API?](#what-is-this-api)
-2. [What You'll Need](#what-youll-need)
-3. [Step 1: Install Required Software](#step-1-install-required-software)
-4. [Step 2: Create a GitHub Account](#step-2-create-a-github-account)
-5. [Step 3: Upload Your Code to GitHub](#step-3-upload-your-code-to-github)
-6. [Step 4: Deploy to Vercel](#step-4-deploy-to-vercel)
-7. [Step 5: Test Your API](#step-5-test-your-api)
-8. [All Available Endpoints](#all-available-endpoints)
-9. [Troubleshooting](#troubleshooting)
+Complete deployment guide for the JacobTechLabs Fitness API. Deploy your own instance in minutes.
 
 ---
 
-## 🤔 What is this API?
+## 📚 Quick Links
 
-This API is like a giant database of exercise information. Think of it as a fitness encyclopedia that your apps can talk to. When you send a request like "give me chest exercises", it sends back detailed information about exercises that work your chest - complete with instructions, images, and more!
-
-**What can it do?**
-- Return lists of exercises
-- Search for exercises by name
-- Filter exercises by muscle group, equipment, or body part
-- Get detailed information about specific exercises
+- **Documentation**: [docs.jacobtechlabs.dev](https://docs.jacobtechlabs.dev)
+- **GitHub**: [github.com/jacobtechlabs/api-core](https://github.com/jacobtechlabs/api-core)
+- **Support**: [dev@jacobtechlabs.dev](mailto:dev@jacobtechlabs.dev)
 
 ---
 
-## 🛠️ What You'll Need
+## 🎯 Deployment Options
 
-Before we start, make sure you have these (don't worry, they're all free!):
+Choose the deployment method that best fits your needs:
 
-1. **Node.js** - Software that lets your computer run JavaScript code
-2. **GitHub Account** - Where your code will live online
-3. **Vercel Account** - Where your API will be hosted (free!)
-4. **Git** - A tool to upload your code to GitHub
-
----
-
-## Step 1: Install Required Software
-
-### Install Node.js
-
-1. Go to [https://nodejs.org](https://nodejs.org)
-2. Click the green "LTS" button (this is the stable version)
-3. Download and install it (just click "Next" through everything)
-4. To verify it installed, open a terminal/command prompt and type:
-   ```bash
-   node --version
-   ```
-   You should see something like `v20.x.x`
-
-### Install Git
-
-1. Go to [https://git-scm.com](https://git-scm.com)
-2. Download and install Git
-3. To verify, type in terminal:
-   ```bash
-   git --version
-   ```
+| Method | Best For | Time to Deploy | Cost |
+|--------|----------|----------------|------|
+| **Docker** | Production, full control | 10 min | Server costs |
+| **Google Cloud Run** | Auto-scaling production | 15 min | Pay-per-use |
+| **Railway** | Quick deployment | 5 min | Generous free tier |
+| **Render** | Simple hosting | 5 min | Free tier available |
+| **Vercel** | Serverless functions | 2 min | Free tier |
 
 ---
 
-## Step 2: Create a GitHub Account
+## 🐳 Option 1: Docker (Recommended for Production)
 
-1. Go to [https://github.com](https://github.com)
-2. Click "Sign Up"
-3. Create a free account
-4. Verify your email
+### Prerequisites
+- Docker installed ([docker.com](https://docker.com))
 
----
-
-## Step 3: Upload Your Code to GitHub
-
-### Option A: Using GitHub Desktop (Easiest for Beginners)
-
-1. **Download GitHub Desktop**: [https://desktop.github.com](https://desktop.github.com)
-2. **Install and sign in** with your GitHub account
-3. **Add your project**:
-   - Click "File" → "Add Local Repository"
-   - Click "Choose..." and select your `exercise_plug` folder
-   - Click "Add Repository"
-4. **Commit your changes**:
-   - You'll see your modified files listed
-   - Write a summary like "Fix API endpoint for deployment"
-   - Click "Commit to main"
-5. **Publish to GitHub**:
-   - Click "Publish repository"
-   - Give it a name like "exercisedb-api"
-   - Click "Publish Repository"
-
-### Option B: Using Command Line (If you're comfortable with terminal)
+### Build and Run
 
 ```bash
-# Navigate to your project
-cd path/to/exercise_plug
+# Clone repository
+git clone https://github.com/jacobtechlabs/api-core.git
+cd api-core
 
-# Initialize git (if not already done)
-git init
+# Build Docker image
+docker build -t jacobtechlabs-api .
 
-# Add all files
-git add .
+# Run container
+docker run -d -p 3000:3000 --name jtl-api jacobtechlabs-api
 
-# Commit changes
-git commit -m "Fix API endpoint for deployment"
+# Test
+curl http://localhost:3000/health
+```
 
-# Add your GitHub as remote (replace YOUR_USERNAME with your GitHub username)
-git remote add origin https://github.com/YOUR_USERNAME/exercisedb-api.git
+### Using Docker Compose
 
-# Push to GitHub
-git push -u origin main
+```bash
+# Start with docker-compose
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop
+docker-compose down
 ```
 
 ---
 
-## Step 4: Deploy to Vercel
+## ☁️ Option 2: Google Cloud Run (Best for Production)
 
-1. **Go to Vercel**: [https://vercel.com](https://vercel.com)
-2. **Sign up** with your GitHub account
-3. **Import your repository**:
-   - Click "Add New Project"
-   - Select "Import Git Repository"
-   - Choose your `exercisedb-api` repository
-4. **Configure deployment**:
-   - Framework Preset: Select "Other"
-   - Root Directory: Leave as `./`
-   - Build Command: `npm run build`
-   - Output Directory: `dist`
-5. **Click "Deploy"**
-6. **Wait for deployment** (usually takes 1-2 minutes)
-7. **Copy your URL** - Vercel will give you a URL like `https://your-project.vercel.app`
+### Prerequisites
+- Google Cloud account with billing enabled
+- Google Cloud CLI installed
 
-🎉 **Congratulations! Your API is now live on the internet!**
+### Deploy Steps
+
+```bash
+# Build and push to Google Container Registry
+gcloud builds submit --tag gcr.io/PROJECT-ID/jacobtechlabs-api
+
+# Deploy to Cloud Run
+gcloud run deploy jacobtechlabs-api \
+  --image gcr.io/PROJECT-ID/jacobtechlabs-api \
+  --platform managed \
+  --region us-central1 \
+  --allow-unauthenticated \
+  --memory 512Mi \
+  --max-instances 10
+```
+
+**Why Cloud Run?**
+- ✅ Auto-scales to zero (cost-effective)
+- ✅ Sub-second cold starts with Bun
+- ✅ Global load balancing
+- ✅ Built-in HTTPS
 
 ---
 
-## Step 5: Test Your API
+## 🚂 Option 3: Railway (Easiest)
 
-### Test using your browser:
+1. Go to [railway.app](https://railway.app)
+2. Sign up with GitHub
+3. Click "New Project" → "Deploy from GitHub repo"
+4. Select `jacobtechlabs/api-core`
+5. Railway auto-detects and deploys
 
-1. Open your browser
-2. Go to: `https://YOUR_VERCEL_URL.vercel.app/docs`
-3. You should see the interactive API documentation!
+Done! Railway provides a URL automatically.
 
-### Test using curl (in terminal):
+---
+
+## 🎨 Option 4: Render
+
+1. Go to [render.com](https://render.com)
+2. Sign up with GitHub
+3. Click "New Web Service"
+4. Connect your GitHub repo
+5. Select:
+   - **Environment**: Docker
+   - **Dockerfile Path**: `./Dockerfile`
+   - **Port**: 3000
+6. Click "Create Web Service"
+
+---
+
+## ⚡ Option 5: Vercel
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/jacobtechlabs/api-core)
+
+**Note**: Vercel uses Node.js runtime instead of Bun. For best performance, use Docker deployment options.
+
+---
+
+## 🧪 Testing Your Deployment
+
+### Health Check
 
 ```bash
-# Get all exercises
-curl "https://YOUR_VERCEL_URL.vercel.app/api/v1/exercises?limit=5"
+curl https://your-api-url/health
+```
 
-# Search for exercises
-curl "https://YOUR_VERCEL_URL.vercel.app/api/v1/exercises/search?q=chest"
+Expected response:
+```json
+{
+  "status": "healthy",
+  "timestamp": "2024-01-20T10:30:00Z",
+  "version": "1.0.0"
+}
+```
+
+### API Endpoints Test
+
+```bash
+# List exercises (paginated)
+curl "https://your-api-url/api/v1/exercises?limit=5"
+
+# Search exercises
+curl "https://your-api-url/api/v1/exercises/search?q=bench+press"
 
 # Get exercises by muscle
-curl "https://YOUR_VERCEL_URL.vercel.app/api/v1/muscles/abs/exercises"
+curl "https://your-api-url/api/v1/muscles/chest/exercises"
+
+# List reference data
+curl "https://your-api-url/api/v1/muscles"
+curl "https://your-api-url/api/v1/equipments"
+curl "https://your-api-url/api/v1/bodyparts"
+```
+
+### Interactive Documentation
+
+Visit `https://your-api-url/docs` to explore the API interactively.
+
+---
+
+## 🔧 Environment Variables
+
+Optional configuration via environment variables:
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `PORT` | Server port | `3000` |
+| `NODE_ENV` | Environment mode | `development` |
+| `RATE_LIMIT_ENABLED` | Enable rate limiting | `true` |
+| `RATE_LIMIT_MAX` | Max requests per window | `100` |
+| `CORS_ORIGIN` | Allowed CORS origin | `*` |
+
+---
+
+## 🔒 Security Best Practices
+
+1. **Rate Limiting**: Enabled by default (100 req/min)
+2. **CORS**: Configure allowed origins in production
+3. **Security Headers**: Helmet.js included
+4. **Health Checks**: Use `/health` for monitoring
+
+---
+
+## 📊 Monitoring & Logging
+
+### Health Endpoint
+- **URL**: `/health`
+- **Returns**: Status, timestamp, version
+
+### Response Headers
+All responses include:
+- `X-Response-Time` - Request processing time
+- `X-Powered-By` - API Engine identifier
+
+---
+
+## 🆘 Troubleshooting
+
+### Build Failures
+
+```bash
+# Clean and rebuild
+rm -rf node_modules dist
+bun install
+bun run build
+```
+
+### Port Already in Use
+
+```bash
+# Change port
+PORT=8080 bun run dev
+```
+
+### Docker Issues
+
+```bash
+# Rebuild with no cache
+docker build --no-cache -t jacobtechlabs-api .
+
+# Check container logs
+docker logs jtl-api
 ```
 
 ---
 
-## 📡 All Available Endpoints
+## 🎓 Need Help?
 
-Here's every endpoint your API supports. Replace `YOUR_URL` with your actual Vercel URL.
-
-### Exercise Endpoints
-
-| Endpoint | Description | Example |
-|----------|-------------|---------|
-| `GET /api/v1/exercises` | Get all exercises with pagination | `YOUR_URL/api/v1/exercises?limit=10&offset=0` |
-| `GET /api/v1/exercises/search` | Search exercises by keyword | `YOUR_URL/api/v1/exercises/search?q=chest&threshold=0.3` |
-| `GET /api/v1/exercises/filter` | Filter by multiple criteria | `YOUR_URL/api/v1/exercises/filter?muscles=chest&equipment=dumbbell` |
-| `GET /api/v1/exercises/{exerciseId}` | Get specific exercise by ID | `YOUR_URL/api/v1/exercises/ztAa1RK` |
-| `GET /api/v1/bodyparts/{bodyPartName}/exercises` | Get exercises by body part | `YOUR_URL/api/v1/bodyparts/upper arms/exercises` |
-| `GET /api/v1/equipments/{equipmentName}/exercises` | Get exercises by equipment | `YOUR_URL/api/v1/equipments/dumbbell/exercises` |
-| `GET /api/v1/muscles/{muscleName}/exercises` | Get exercises by muscle | `YOUR_URL/api/v1/muscles/abs/exercises?includeSecondary=false` |
-
-### List Endpoints
-
-| Endpoint | Description | Example |
-|----------|-------------|---------|
-| `GET /api/v1/muscles` | Get all muscle names | `YOUR_URL/api/v1/muscles` |
-| `GET /api/v1/bodyparts` | Get all body part names | `YOUR_URL/api/v1/bodyparts` |
-| `GET /api/v1/equipments` | Get all equipment names | `YOUR_URL/api/v1/equipments` |
-
-### Documentation
-
-| Endpoint | Description |
-|----------|-------------|
-| `GET /docs` | Interactive API documentation (Swagger UI) |
-| `GET /swagger` | OpenAPI specification (JSON) |
+- 📧 Email: [dev@jacobtechlabs.dev](mailto:dev@jacobtechlabs.dev)
+- 🐛 Issues: [GitHub Issues](https://github.com/jacobtechlabs/api-core/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/jacobtechlabs/api-core/discussions)
 
 ---
 
-## 🔧 Troubleshooting
-
-### "Command not found: node" or "Command not found: npm"
-- Node.js is not installed or not in your PATH
-- Solution: Reinstall Node.js from [nodejs.org](https://nodejs.org)
-
-### "Git is not recognized"
-- Git is not installed
-- Solution: Install Git from [git-scm.com](https://git-scm.com)
-
-### Vercel deployment fails
-- Check the deployment logs in Vercel dashboard
-- Common issues:
-  - Missing `package.json` - make sure it exists
-  - Build errors - run `npm run build` locally first to check
-
-### API returns 404
-- Make sure you're using the correct URL format
-- All endpoints start with `/api/v1/`
-- Check that your Vercel deployment completed successfully
-
-### API returns 500 (Internal Server Error)
-- This means the code ran but encountered an error
-- Check Vercel logs for error details
-- The issue might be with the data or a specific query
-
----
-
-## 💡 Tips for Success
-
-1. **Always test locally first** before deploying
-   ```bash
-   npm run dev
-   ```
-
-2. **Keep your code on GitHub updated** - every time you make changes, commit and push them
-
-3. **Vercel automatically deploys** when you push to GitHub - no need to manually deploy each time!
-
-4. **Use the /docs endpoint** to explore all available endpoints interactively
-
-5. **Save your Vercel URL** - you'll need it to access your API
-
----
-
-## 🎓 What You Learned
-
-Congratulations! You've learned:
-- ✅ How to set up Node.js and Git
-- ✅ How to use GitHub to store your code
-- ✅ How to deploy an API using Vercel
-- ✅ How to test API endpoints
-- ✅ All the available endpoints in your ExerciseDB API
-
-You're now ready to build awesome fitness applications! 🏋️‍♂️
-
----
-
-## 📞 Need Help?
-
-- Check the [README.md](README.md) for more information about the API
-- Visit the API documentation at `YOUR_URL/docs`
-- Check Vercel's documentation at [vercel.com/docs](https://vercel.com/docs)
-
----
-
-**Made with ❤️ for aspiring developers**
-
-*This guide was generated by your EL Architect. Ask me anything!*
-
-**Made with ❤️ by GodFaather-Zeus**
+**Powered by JacobTechLabs** - *Building the future of fitness technology*

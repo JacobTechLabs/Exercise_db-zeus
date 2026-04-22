@@ -38,11 +38,15 @@
         },
         {
           "key": "Author",
-          "value": "ExerciseDB API"
+          "value": "JacobTechLabs"
         },
         {
           "key": "Github",
-          "value": "https://github.com/exercisedb/exercisedb-api"
+          "value": "https://github.com/jacobtechlabs/api-core"
+        },
+        {
+          "key": "X-Powered-By",
+          "value": "JacobTechLabs API Engine"
         }
       ]
     }

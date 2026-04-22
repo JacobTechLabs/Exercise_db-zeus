@@ -1,9 +1,9 @@
 {
-  "name": "exercisedb-api",
-  "description": "ExerciseDB API",
-  "repository": "https://github.com/exercisedb/exercisedb-api",
-  "version": "0.0.7",
-  "author": "ExerciseDB API",
+  "name": "@jacobtechlabs/api-core",
+  "description": "JacobTechLabs Fitness API - Developer-first API infrastructure for fitness applications",
+  "repository": "https://github.com/jacobtechlabs/api-core",
+  "version": "1.0.0",
+  "author": "JacobTechLabs <dev@jacobtechlabs.dev>",
   "license": "AGPL-3.0",
   "type": "module",
   "main": "api/index.ts",
@@ -41,6 +41,8 @@
     "test": "vitest run",
     "test:ui": "vitest --ui",
     "deploy": "vercel deploy --prod",
+    "docker:build": "docker build -t jacobtechlabs-api .",
+    "docker:run": "docker run -p 3000:3000 jacobtechlabs-api",
     "postinstall": "npx simple-git-hooks"
   },
   "simple-git-hooks": {

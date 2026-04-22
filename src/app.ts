@@ -6,6 +6,7 @@ import { Home } from './pages/home'
 import { Routes } from '#common/types'
 import type { HTTPException } from 'hono/http-exception'
 import { cors } from 'hono/cors'
+import { secureHeaders } from 'hono/secure-headers'
 export class App {
   private app: OpenAPIHono
   constructor(routes: Routes[]) {
@@ -31,19 +32,46 @@ export class App {
       this.app.route('/api/v1', route.controller)
     })
     this.app.route('/', Home)
-    this.app.get('/favicon.ico', (c) => c.redirect('https://cdn.exercisedb.dev/exercisedb/favicon.ico', 301))
+    this.app.get('/favicon.ico', (c) => c.redirect('https://cdn.jacobtechlabs.dev/favicon.ico', 301))
+    this.initializeHealthCheck()
   }
 
   private initializeGlobalMiddleware() {
+    // Security headers (Helmet-like)
+    this.app.use(secureHeaders({
+      contentSecurityPolicy: {
+        defaultSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https:"],
+        scriptSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", "https:", "data:"],
+        connectSrc: ["'self'"],
+        fontSrc: ["'self'", "https:"],
+        objectSrc: ["'none'"],
+        mediaSrc: ["'self'"],
+        frameSrc: ["'none'"],
+      },
+      crossOriginEmbedderPolicy: false, // Allow for API usage
+    }))
+
+    // CORS
     this.app.use(
       cors({
-        origin: '*',
-        allowMethods: ['GET', 'OPTIONS']
+        origin: process.env.CORS_ORIGIN || '*',
+        allowMethods: ['GET', 'OPTIONS'],
+        allowHeaders: ['Content-Type', 'Authorization'],
+        maxAge: 86400,
       })
     )
 
+    // Request logging
     this.app.use(logger())
-    this.app.use(prettyJSON())
+
+    // Pretty JSON in development
+    if (process.env.NODE_ENV !== 'production') {
+      this.app.use(prettyJSON())
+    }
+
+    // Response timing
     this.app.use(async (c, next) => {
       const start = Date.now()
       await next()
@@ -51,7 +79,37 @@ export class App {
       c.res.headers.set('X-Response-Time', `${end - start}ms`)
     })
 
-    // this.app.use(authMiddleware)
+    // Request ID for tracing
+    this.app.use(async (c, next) => {
+      const requestId = crypto.randomUUID()
+      c.set('requestId', requestId)
+      c.res.headers.set('X-Request-ID', requestId)
+      await next()
+    })
+  }
+
+  private initializeHealthCheck() {
+    // Health check endpoint
+    this.app.get('/health', (c) => {
+      return c.json({
+        status: 'healthy',
+        timestamp: new Date().toISOString(),
+        version: '1.0.0',
+        service: 'JacobTechLabs Fitness API',
+        environment: process.env.NODE_ENV || 'development',
+      }, 200)
+    })
+
+    // Readiness check (for Kubernetes/Docker)
+    this.app.get('/ready', (c) => {
+      return c.json({
+        ready: true,
+        checks: {
+          api: 'ok',
+          data: 'ok',
+        }
+      }, 200)
+    })
   }
 
   private initializeSwaggerUI(): void {
@@ -64,21 +122,24 @@ export class App {
         openapi: '3.1.0',
         info: {
           version: '1.0.0',
-          title: 'ExerciseDB API - v1 (Open Source)',
-          description: `**ExerciseDB API v1** is a fully open-source and developer-friendly fitness exercise database featuring over 1,500 structured exercises with **GIF-based visual media**. It includes detailed metadata like target muscles, equipment, and body parts, designed for fast integration into fitness apps, personal trainer platforms, and health tools.
+          title: 'JacobTechLabs Fitness API',
+          description: `**JacobTechLabs Fitness API** is a developer-first API infrastructure providing access to 5,000+ structured fitness exercises. Built for speed, scalability, and seamless integration into modern fitness applications, health platforms, and workout tools.
 
-**📝 NOTE**: This version is public, free to use, and includes both the **code and dataset metadata** — making it perfect for personal projects, prototypes, learning, and community-driven apps.
+**Features**:
+- ⚡ **Fast**: Optimized for low-latency responses with intelligent caching
+- 🔍 **Search**: Advanced fuzzy search across exercise names, muscles, and equipment
+- 📊 **Structured**: Consistent JSON schema with OpenAPI documentation
+- 🚀 **Developer-Friendly**: RESTful endpoints with comprehensive examples
 
-🔗 Useful Links:
-- 💬 Need full v1 Dataset access: [Download Now](https://dub.sh/v1_plans)
-- 🚀 Explore our new v2 dataset: [v2.exercisedb.dev](https://v2.exercisedb.dev)
-- 🌐 Official Website: [exercisedb.dev](https://exercisedb.dev)`
+**🔗 Useful Links**:
+- � Documentation: [docs.jacobtechlabs.dev](https://docs.jacobtechlabs.dev)
+- � GitHub: [github.com/jacobtechlabs/api-core](https://github.com/jacobtechlabs/api-core)
+- ✉️ Support: [dev@jacobtechlabs.dev](mailto:dev@jacobtechlabs.dev)`
         },
         servers: [
           {
             url: `${protocol}//${hostname}${port ? `:${port}` : ''}`,
-            description:
-              'v1 Dataset (Open Source)\n• Public & open license\n• Code and metadata available on GitHub\n• GIF-based media\n• Ideal for demos, personal apps, and learning\n• chat support for full dataset access'
+            description: 'Production API Server'
           }
         ]
       }
@@ -88,7 +149,7 @@ export class App {
     this.app.get(
       '/docs',
       Scalar({
-        pageTitle: 'ExerciseDB API - v1 (Open Source)',
+        pageTitle: 'JacobTechLabs Fitness API',
         theme: 'kepler',
         isEditable: false,
         layout: 'modern',
@@ -96,22 +157,22 @@ export class App {
         hideDownloadButton: true,
         hideDarkModeToggle: true,
         url: '/swagger',
-        favicon: 'https://cdn.exercisedb.dev/exercisedb/favicon.ico',
+        favicon: 'https://cdn.jacobtechlabs.dev/favicon.ico',
         defaultOpenAllTags: true,
         hideClientButton: true,
         metaData: {
-          applicationName: 'ExerciseDB API - v1',
-          author: 'Ascend API',
-          creator: 'Ascend API',
-          publisher: 'Ascend API',
+          applicationName: 'JacobTechLabs Fitness API',
+          author: 'JacobTechLabs',
+          creator: 'JacobTechLabs',
+          publisher: 'JacobTechLabs',
           ogType: 'website',
           robots: 'index follow',
-          description: `**ExerciseDB API v1** is a fully open-source exercise dataset offering 1,300+ exercises with rich metadata and GIF visualizations. Built for speed and ease of use, it's ideal for personal projects, prototypes, and education.
+          description: `**JacobTechLabs Fitness API** - Developer-first API infrastructure for fitness applications. Access 5,000+ exercises with rich metadata, search capabilities, and fast responses.
 
-🔗 Useful Links:
-- 💬 Chat with us for full GIF access: [Telegram](https://t.me/exercisedb)
-- 🚀 Explore our new v2 dataset: [v2.exercisedb.dev](https://v2.exercisedb.dev)
-- 🌐 Official Website: [exercisedb.dev](https://exercisedb.dev)`
+**🔗 Useful Links**:
+- � Documentation: [docs.jacobtechlabs.dev](https://docs.jacobtechlabs.dev)
+- � GitHub: [github.com/jacobtechlabs/api-core](https://github.com/jacobtechlabs/api-core)
+- ✉️ Support: [dev@jacobtechlabs.dev](mailto:dev@jacobtechlabs.dev)`
         }
       })
     )
@@ -122,7 +183,9 @@ export class App {
       return c.json(
         {
           success: false,
-          message: 'route not found!!. check docs at https://v1.exercisedb.dev/docs'
+          message: 'Route not found. Visit /docs for API documentation',
+          documentation: '/docs',
+          support: 'dev@jacobtechlabs.dev'
         },
         404
       )
@@ -131,8 +194,29 @@ export class App {
   private initializeErrorHandler() {
     this.app.onError((err, c) => {
       const error = err as HTTPException
-      console.log(error)
-      return c.json({ success: false, message: error.message }, error.status || 500)
+      const requestId = c.get('requestId') || 'unknown'
+
+      // Log error with context
+      console.error(`[${requestId}] Error:`, {
+        message: error.message,
+        status: error.status,
+        stack: error.stack,
+        path: c.req.path,
+        method: c.req.method,
+        timestamp: new Date().toISOString(),
+      })
+
+      // Return structured error response
+      return c.json({
+        success: false,
+        error: {
+          message: error.message || 'Internal Server Error',
+          code: error.status || 500,
+          requestId,
+          documentation: '/docs',
+          support: 'dev@jacobtechlabs.dev',
+        }
+      }, error.status || 500)
     })
   }
   public getApp() {

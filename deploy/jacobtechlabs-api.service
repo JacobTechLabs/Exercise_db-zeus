@@ -1,0 +1,22 @@
+[Unit]
+Description=JacobTechLabs Fitness API
+After=network.target
+
+[Service]
+Type=simple
+User=opc
+Group=opc
+WorkingDirectory=/home/opc/Fundz/exercise_plug
+Environment=NODE_ENV=production
+Environment=PORT=3000
+Environment=CORS_ORIGIN=*
+Environment=PATH=/home/opc/.bun/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/home/opc/.bun/bin/bun run start
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=jacobtechlabs-api
+
+[Install]
+WantedBy=multi-user.target
